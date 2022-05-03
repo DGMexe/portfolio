@@ -11,7 +11,7 @@ def my_home():
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'), '/assets/favicon.ico')
+    return send_from_directory(os.path.join(app.root_path, 'static'), '/assets/favicon.png')
 
 
 @app.route('/<string:page_name>')
@@ -19,19 +19,12 @@ def html_page(page_name=''):
     return render_template(page_name)
 
 
-def write_to_file(data):
-    with open("database.txt", "a") as database:
-        for data_type in data:
-            database.write(f"{data_type}: {data[data_type]}\n")
-        database.write("\n")
-
-
 def write_to_csv(data):
-    with open("database.csv", mode="a", newline='') as database2:
+    with open("database.csv", mode="a", newline='') as database:
         email = data["email"]
         subject = data["subject"]
         message = data["message"]
-        csv_writer = csv.writer(database2, delimiter=';')
+        csv_writer = csv.writer(database, delimiter=';')
         csv_writer.writerow([email, subject, message])
 
 
@@ -42,8 +35,7 @@ def submit_form():
             data = request.form.to_dict()
             write_to_csv(data)
             return redirect('/thankyou.html')
-        except:
+        except:  #noqa
             return 'Did not save to database... :('
     else:
         return 'Something went bad...'
-
