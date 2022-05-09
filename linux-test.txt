@@ -1,0 +1,4 @@
+Hello, I am currently testing Ubuntu on WSL,
+typing in nano and also using fish shell.
+I am also testing git on this system.
+It looks very cool and I like it.
